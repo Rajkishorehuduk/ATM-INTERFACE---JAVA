@@ -3,21 +3,21 @@ public class User {
     private String pin;
     private Account account;
 
-    public User(String userId, String pin) {
+    public User(String userId, String pin, Account account) {
         this.userId = userId;
         this.pin = pin;
-        this.account = new Account();
+        this.account = account;
     }
 
-    public boolean validate(String inputPin) {
+    public String getUserId() {
+        return userId;
+    }
+
+    public boolean authenticate(String inputPin) {
         return this.pin.equals(inputPin);
     }
 
     public Account getAccount() {
         return account;
-    }
-
-    public String getUserId() {
-        return userId;
     }
 }
