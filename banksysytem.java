@@ -1,15 +1,20 @@
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BankSystem {
-    private Map<String, User> users = new HashMap<>();
+    private Map<String, User> users;
 
-    public void addUser(String userId, String pin) {
-        users.put(userId, new User(userId, pin));
+    public BankSystem() {
+        users = new HashMap<>();
     }
 
-    public User login(String userId, String pin) {
+    public void addUser(User user) {
+        users.put(user.getUserId(), user);
+    }
+
+    public User authenticateUser(String userId, String pin) {
         User user = users.get(userId);
-        if (user != null && user.validate(pin)) {
+        if (user != null && user.authenticate(pin)) {
             return user;
         }
         return null;
