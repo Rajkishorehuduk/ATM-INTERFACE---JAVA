@@ -1,17 +1,31 @@
-import java.time.LocalDateTime;
-
 public class Transaction {
-    String type;
-    double amount;
-    LocalDateTime date;
+    private String type;
+    private double amount;
+    private Account fromAccount;
+    private Account toAccount;
 
-    public Transaction(String type, double amount) {
+    public Transaction(String type, double amount, Account fromAccount, Account toAccount) {
         this.type = type;
         this.amount = amount;
-        this.date = LocalDateTime.now();
+        this.fromAccount = fromAccount;
+        this.toAccount = toAccount;
     }
 
-    public String toString() {
-        return date + " - " + type + ": ₹" + amount;
+    public boolean process() {
+        switch (type) {
+            case "transfer":
+                if (fromAccount.withdraw(amount)) {
+                    toAccount.deposit(amount);
+                    return true;
+                }
+                return false;
+            case "deposit":
+                fromAccount.deposit(amount);
+                return true;
+            case "withdraw":
+                return fromAccount.withdraw(amount);
+            default:
+                return false;
+        }
     }
 }
